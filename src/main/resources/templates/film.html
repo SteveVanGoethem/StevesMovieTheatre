@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}"></title>
+    <link rel="icon" th:href="@{/images/magazijn.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div id="navBar">
+    <a href="/genres">Genres</a>
+</div>
+<div id="filmWrapper" th:object="${film}">
+    <h1 th:text="${film.titel()}"></h1>
+    <div id="imageWrapper">
+        <img th:src="@{'/images/' + ${film.id()} + '.jpg'}">
+    </div>
+    <label for="prijs">
+        Prijs:
+    </label>
+    <div id="prijs" th:text="'€ ' + ${film.prijs()}"></div>
+    <label for="voorraad">
+        Voorraad:
+    </label>
+    <div id="voorraad" th:text="${film.voorraad()}"></div>
+    <label>
+        Gereserveerd:
+    </label>
+    <div id="gereserveerd" th:text="${film.gereserveerd()}"></div>
+    <label for="beschikbaar">
+        Beschikbaar:
+    </label>
+    <div id="beschikbaar" th:text="${film.voorraad() - film.gereserveerd()}"></div>
+
+</div>
+</body>
+</html>
