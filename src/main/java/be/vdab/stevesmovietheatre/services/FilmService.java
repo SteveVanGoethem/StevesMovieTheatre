@@ -5,6 +5,7 @@ import be.vdab.stevesmovietheatre.repositories.FilmRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class FilmService {
@@ -21,5 +22,17 @@ public class FilmService {
 
     public Film findFilmById(long id){
         return filmRepository.findFilmById(id);
+    }
+
+    public List<Film> findFilmsByIds(Set<Long> ids){
+        if (ids.isEmpty()) {
+            return List.of();
+        }else{
+            return filmRepository.findFilmsByIds(ids);
+        }
+    }
+
+    public void addReservedToFilms(Set<Long> ids){
+        filmRepository.addReservedToFilms(ids);
     }
 }

@@ -9,7 +9,7 @@
 <div id="navBar">
     <a href="/genres">Genres</a>
 </div>
-<div id="filmWrapper" th:object="${film}">
+<div th:object="${film}">
     <h1 th:text="${film.titel()}"></h1>
     <div id="imageWrapper">
         <img th:src="@{'/images/' + ${film.id()} + '.jpg'}">
@@ -30,7 +30,9 @@
         Beschikbaar:
     </label>
     <div id="beschikbaar" th:text="${film.voorraad() - film.gereserveerd()}"></div>
-
+    <form method="post" th:action="@{/mandje/addToCart/{id}(id=${film.id()})}" id="filmForm" >
+        <button type="submit" class="button" form="filmForm" id="btnFilmForm">In mandje</button>
+    </form>
 </div>
 </body>
 </html>

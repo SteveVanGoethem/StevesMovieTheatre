@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${title}"></title>
+    <link rel="icon" th:href="@{/images/magazijn.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
+<div id="navBar">
+    <a href="/genres">Genres</a>
+    <a href="/mandje">Mandje</a>
+    <a href="/klant">Klant</a>
+</div>
+<h1>Klanten</h1>
+<form method="get" th:action="@{/klant}" th:object="${klantForm}">
+    <label for="familieNaamInput">Familienaam bevat:</label>
+    <input type="text" name="familieNaamInput" id="familieNaamInput" th:field="*{name}">
+    <button type="submit" id="btnSearch">Zoeken</button>
+</form>
+<table id="klantTabel" class="table">
+    <thead>
+        <tr>
+            <th>Naam</th>
+            <th>Adres</th>
+            <th>Postcode</th>
+            <th>Gemeente</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:each="klant: ${klanten}" th:object="${klant}">
+        <td><a th:href="@{/klant/bevestig/{id}(id=*{id})}" th:text="*{familienaam} + ' ' + *{voornaam}"></a></td>
+        <td th:text="*{straatNummer()}"></td>
+        <td th:text="*{postcode()}"></td>
+        <td th:text="*{gemeente()}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

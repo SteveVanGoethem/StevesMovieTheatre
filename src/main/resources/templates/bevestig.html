@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}"></title>
+    <link rel="icon" th:href="@{/images/magazijn.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div id="navBar">
+    <a href="/genres">Genres</a>
+    <a href="/mandje">Mandje</a>
+    <a href="/klant">Klant</a>
+</div>
+<h1>Bevestigen</h1>
+<div th:text="${films.size()} + ' film(s) voor ' + ${klant.voornaam()} + ' ' + ${klant.familienaam()}"></div>
+<form th:action="@{/rapport}">
+    <button>Bevestigen</button>
+</form>
+</body>
+</html>

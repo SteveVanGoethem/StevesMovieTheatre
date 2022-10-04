@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${title}"></title>
+    <link rel="icon" th:href="@{/images/magazijn.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
+<div id="navBar">
+    <a href="/genres">Genres</a>
+    <a href="/mandje">Mandje</a>
+    <a href="/klant">Klant</a>
+</div>
+<form method="post" th:action="@{'mandje/removeFromCart'}" id="mandjeForm" th:object="${films}">
+    <h1>Mandje</h1>
+    <th:block th:if="not ${films.isEmpty()}">
+    <table>
+        <thead>
+            <tr>
+                <th>Film</th>
+                <th>Prijs</th>
+                <th><button class="button" form="mandjeForm" id="btnDelFromTable">Verwijderen</button></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="film: ${films}" th:object="${film}">
+                <td th:text="*{titel()}"></td>
+                <td th:text="*{prijs()}"></td>
+                <td><input type="checkbox" name="id" th:value="*{id()}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Totaal:'"></td>
+                <td th:text="'€ '+${#aggregates.sum(films.![prijs])}"></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    </th:block>
+    <div th:if="${films.isEmpty()}">Het mandje is leeg</div>
+</form>
 </body>
 </html>

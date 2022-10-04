@@ -16,7 +16,7 @@
     </div>
     <div id="filmWrapper" th:if="${filmList}">
         <h2 th:text="${genreNaam}"></h2>
-        <a th:each="Film:${filmList}" th:object="${Film}"><img th:src="@{'/images/' + ${Film.id()} +  '.jpg'}" th:href="@{'/film/' + ${Film.id()}}"></a>
+        <a th:href="@{'/film/' + ${Film.id()}}" th:each="Film:${filmList}" th:object="${Film}"><img th:src="@{'/images/' + ${Film.id()} +  '.jpg'}"></a>
     </div>
 </div>
 </body>

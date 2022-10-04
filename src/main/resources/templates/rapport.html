@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}"></title>
+    <link rel="icon" th:href="@{/images/magazijn.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div id="navBar">
+    <a href="/genres">Genres</a>
+</div>
+<h1>Rapport</h1>
+<div th:if="${resFilms.isEmpty() || resFilms == null}">De Reservatie is OK</div>
+<th:block th:if="not ${resFilms.isEmpty() || resFilms == null}">
+    <div>Er zijn geen beschikbare reservaties meer voor:</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Voorraad</th>
+                <th>Gereserveerd</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="film : ${resFilms}" th:object="${film}">
+                <td th:text="${film.titel}"></td>
+                <td th:text="${film.voorraad}"></td>
+                <td th:text="${film.gereserveerd}"></td>
+            </tr>
+        </tbody>
+    </table>
+</th:block>
+
+</body>
+</html>

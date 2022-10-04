@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class FilmRepository {
@@ -16,7 +17,7 @@ public class FilmRepository {
         this.template = template;
     }
 
-    public RowMapper<Film> filmRowMapper = (rs, rowNum) ->  new Film(
+    public RowMapper<Film> filmRowMapper = (rs, rowNum) -> new Film(
             rs.getLong("id"),
             rs.getLong("genreId"),
             rs.getString("titel"),
@@ -25,7 +26,7 @@ public class FilmRepository {
             rs.getBigDecimal("prijs")
     );
 
-    public List<Film> findFilmsByGenreId(long id){
+    public List<Film> findFilmsByGenreId(long id) {
         var sql = """
                 SELECT id, genreId, titel, voorraad, gereserveerd, prijs
                 FROM films
@@ -34,7 +35,7 @@ public class FilmRepository {
         return template.query(sql, filmRowMapper, id);
     }
 
-    public Film findFilmById(long id){
+    public Film findFilmById(long id) {
         var sql = """
                 SELECT id, genreId, titel, voorraad, gereserveerd, prijs
                 FROM films
@@ -42,5 +43,25 @@ public class FilmRepository {
                 """;
 
         return template.queryForObject(sql, filmRowMapper, id);
-        }
+    }
+
+    public List<Film> findFilmsByIds(Set<Long> ids){
+        var sql = """
+                SELECT id, genreId, titel, voorraad, gereserveerd, prijs
+                FROM films
+                where id in (""" + "?,".repeat(ids.size() - 1) +
+                 "?)" ;
+        return template.query(sql, filmRowMapper, ids.toArray());
+    }
+
+    public void addReservedToFilms(Set<Long> ids) {
+         var sql = """
+            UPDATE films
+            SET gereserveerd = gereserveerd + 1
+            WHERE id IN(
+        """
+                    + "?,".repeat(ids.size() - 1)
+                    + "?)";
+            template.update(sql, ids.toArray());
+    }
 }

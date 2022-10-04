@@ -1,0 +1,15 @@
+a{
+    margin: 0.2em;
+}
+
+th{
+    background-color: cadetblue;
+    color: black;
+    padding: 0.2em;
+}
+
+tr{
+    background-color: lightblue;
+    color: black;
+    padding: 0.2em;
+}
