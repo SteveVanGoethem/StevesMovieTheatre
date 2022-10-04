@@ -6,10 +6,12 @@ th{
     background-color: cadetblue;
     color: black;
     padding: 0.2em;
+    text-align: center;
 }
 
 tr{
     background-color: lightblue;
     color: black;
     padding: 0.2em;
+    text-align: center;
 }
